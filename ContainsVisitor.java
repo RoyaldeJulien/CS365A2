@@ -13,7 +13,7 @@ public class ContainsVisitor implements Visitor {
     @Override
     public void atGroup(Group G) {
         if (target.equals(G)) {
-            found = true;;
+            found = true;
         }
     }
 

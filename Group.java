@@ -4,12 +4,18 @@ import java.util.List;
 import java.util.Set;
 
 public class Group {
+	private long creationTime;
     private String ID;
     private Set<Group> children;
 
     public Group(String ID) {
         this.ID = ID;
         children = new HashSet<>();
+        creationTime = System.currentTimeMillis();
+    }
+
+    public Long getCreationTime() {
+    	return creationTime;
     }
 
     public String getID() {

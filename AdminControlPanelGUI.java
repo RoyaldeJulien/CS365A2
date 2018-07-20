@@ -43,6 +43,8 @@ public class AdminControlPanelGUI extends JFrame {
     private static JButton showGroupTotalButton;
     private static JButton showMessagesTotalButton;
     private static JButton showPositivePercentageButton;
+    private static JButton verifyUsersButton;
+    private static JButton FindLastUpdatedUserButton;
 
     private static void addUserButtonPress() {
         if(treeView.getSelectedValue() != null && !userIDEntry.getText().equals("") && !userIDEntry.getText().equals("User ID")) {
@@ -109,6 +111,18 @@ public class AdminControlPanelGUI extends JFrame {
         PositivePercentageTotalVisitor vis = new PositivePercentageTotalVisitor();
         userTree.accept(vis);
         showResults.setText("Pos. Perc.: " + vis.getPercentage()*100 + "%");
+    }
+
+    private static void verifyUsersButtonPress() {
+    	VerifyVisitor vis = new VerifyVisitor();
+    	userTree.accept(vis);
+    	showResults.setText("Bad IDs: { " + vis.getResults() + "}");
+    }
+
+    private static void FindLastUpdatedUserButtonPress() {
+    	FindLastUpdatedUserVisitor vis = new FindLastUpdatedUserVisitor();
+    	userTree.accept(vis);
+    	showResults.setText("Last updated: " + vis.getResults().getID());
     }
 
     //all further methods initialize the frame
@@ -198,7 +212,7 @@ public class AdminControlPanelGUI extends JFrame {
 
     private static JPanel initLowerRightPanel() {
         JPanel lowerRightPanel = new JPanel();
-        lowerRightPanel.setLayout(new GridLayout(2,2, 10,10));
+        lowerRightPanel.setLayout(new GridLayout(3,2, 10,10));
 
         showUserTotalButton = new JButton("Show User Total");
         showUserTotalButton.addActionListener(new ActionListener() {
@@ -228,10 +242,27 @@ public class AdminControlPanelGUI extends JFrame {
             }
         });
 
+        verifyUsersButton = new JButton("Verify Users");
+        verifyUsersButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	verifyUsersButtonPress();
+            }
+        });
+
+        FindLastUpdatedUserButton = new JButton("Find Last Updated User");
+        FindLastUpdatedUserButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	FindLastUpdatedUserButtonPress();
+            }
+        });
+
+
         lowerRightPanel.add(showUserTotalButton);
         lowerRightPanel.add(showGroupTotalButton);
         lowerRightPanel.add(showMessagesTotalButton);
         lowerRightPanel.add(showPositivePercentageButton);
+        lowerRightPanel.add(verifyUsersButton);
+        lowerRightPanel.add(FindLastUpdatedUserButton);
 
         return lowerRightPanel;
     }

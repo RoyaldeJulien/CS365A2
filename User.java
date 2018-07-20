@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 public class User extends Group {
+	private Long lastUpdateTime;
     private Set<User> followers;
     private Set<User> following;
     private List<String> messages;
@@ -15,6 +16,11 @@ public class User extends Group {
         following = new HashSet<>();
         messages = new ArrayList<>();
         window = null;
+        lastUpdateTime = super.getCreationTime();
+    }
+
+    public Long getLastUpdateTime() {
+    	return lastUpdateTime;
     }
 
     public void setWindow(UserGUI W) {
@@ -40,6 +46,7 @@ public class User extends Group {
     }
 
     public void sendMessage(String message) {
+        lastUpdateTime = System.currentTimeMillis();
         String formattedMessage = getID() + ": " + message;
         messages.add(0, formattedMessage);
         for(User follower : followers) {
@@ -48,6 +55,7 @@ public class User extends Group {
     }
 
     public void recieveMessage(String message) {
+        lastUpdateTime = System.currentTimeMillis();
         messages.add(0, message);
         if (window != null) {
             window.update();

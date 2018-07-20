@@ -25,6 +25,7 @@ public class UserGUI extends JFrame {
     //important components of frame
     private JTextField userIDEntry;
     private JTextField messageEntry;
+    private JLabel messageLabel;
     private JTextArea messageView;
     private JTextArea followView;
     private JButton followButton;
@@ -57,12 +58,13 @@ public class UserGUI extends JFrame {
             result.append(U.getID() + "\n");
         }
         followView.setText(result.toString());
+        messageLabel.setText("Messages: (Last Updated: " + user.getLastUpdateTime() + ")");
     }
 
     //all further methods initialize the frame
     private void init() {
-        setTitle(user.getID() +"'s Mini-Twitter");
-        setSize(300, 400);
+        setTitle(user.getID() +"'s Mini-Twitter (Created: " + user.getCreationTime() + ")");
+        setSize(500, 400);
         setLocationRelativeTo(null);
 
         JPanel framePanel = new JPanel();
@@ -123,7 +125,7 @@ public class UserGUI extends JFrame {
 
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
-        JLabel messageLabel = new JLabel("Messages:");
+        messageLabel = new JLabel("Messages: (Last Updated: " + user.getLastUpdateTime() + ")");
         centerPanel.add(messageLabel, BorderLayout.NORTH);
         messageView = new JTextArea("");
         messageView.setEditable(false);
